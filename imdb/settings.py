@@ -52,7 +52,7 @@ ROBOTSTXT_OBEY = False
 # See https://docs.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
     'imdb.middlewares.ImdbDownloaderMiddleware': 543,
-    'scrapy_selenium.SeleniumMiddleware': 800
+    # 'scrapy_selenium.SeleniumMiddleware': 800
 }
 
 # Enable or disable extensions
@@ -96,5 +96,6 @@ from shutil import which
 SELENIUM_DRIVER_NAME = 'firefox'
 # SELENIUM_DRIVER_EXECUTABLE_PATH = which('chromedriver')     #which('geckodriver')
 SELENIUM_DRIVER_EXECUTABLE_PATH = which('./geckodriver')
-# SELENIUM_DRIVER_ARGUMENTS = []  # '--headless' if using chrome instead of firefox
-SELENIUM_DRIVER_ARGUMENTS = ['--headless']  # '--headless' if using chrome instead of firefox
+SELENIUM_DRIVER_ARGUMENTS = []  # '--headless' if using chrome instead of firefox
+# SELENIUM_DRIVER_ARGUMENTS = ['--headless']  # '--headless' if using chrome instead of firefox
+# CLOSESPIDER_ITEMCOUNT = 500
