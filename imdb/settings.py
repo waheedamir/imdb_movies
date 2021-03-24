@@ -63,9 +63,9 @@ DOWNLOADER_MIDDLEWARES = {
 
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
-# ITEM_PIPELINES = {
-#    'imdb.pipelines.ImdbPipeline': 300,
-# }
+ITEM_PIPELINES = {
+   # 'imdb.pipelines.DBPipeline': 300,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://docs.scrapy.org/en/latest/topics/autothrottle.html
@@ -93,9 +93,15 @@ FEED_URI = 'csv/%(name)s/%(name)s_%(file_name)s'
 
 from shutil import which
 
+import platform
+
 SELENIUM_DRIVER_NAME = 'firefox'
 # SELENIUM_DRIVER_EXECUTABLE_PATH = which('chromedriver')     #which('geckodriver')
-SELENIUM_DRIVER_EXECUTABLE_PATH = which('./geckodriver')
+
+if platform.system() == 'Windows':
+    SELENIUM_DRIVER_EXECUTABLE_PATH = which('./geckodriver.exe')
+else:
+    SELENIUM_DRIVER_EXECUTABLE_PATH = which('./geckodriver')
 SELENIUM_DRIVER_ARGUMENTS = []  # '--headless' if using chrome instead of firefox
 # SELENIUM_DRIVER_ARGUMENTS = ['--headless']  # '--headless' if using chrome instead of firefox
 # CLOSESPIDER_ITEMCOUNT = 500

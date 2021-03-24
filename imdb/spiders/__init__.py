@@ -3,15 +3,17 @@ from datetime import datetime
 from urllib.parse import urlparse
 import scrapy
 from scrapy_selenium import SeleniumRequest
+from scrapy.crawler import CrawlerProcess
+from imdb.spiders.imdb_details import MovieDetailsSpider
 
 from imdb import settings
 
 
-class TempeTyresSpider(scrapy.Spider):
+class MoviesSpider(scrapy.Spider):
     name = 'imdb'
     driver = None
     cookies = None
-    file_name = '{}.{}'.format(datetime.now().strftime("%Y%m%d%H%M%S"), settings.FEED_FORMAT)
+    file_name = '{}.{}'.format('movies', settings.FEED_FORMAT)
     custom_settings = {
         'DOWNLOADER_MIDDLEWARES': {
             'scrapy_selenium.SeleniumMiddleware': 800
@@ -169,3 +171,6 @@ class TempeTyresSpider(scrapy.Spider):
 
     def close(spider, reason):
         spider.driver.get('https://pro.imdb.com/logout?ref_=hm_nv_usr_logout')
+        # process = CrawlerProcess()
+        # process.crawl(MovieDetailsSpider)
+        # process.start()

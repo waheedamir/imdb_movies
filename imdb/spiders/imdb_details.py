@@ -1,17 +1,24 @@
 # -*- coding: utf-8 -*-
+import json
 from datetime import datetime
 from urllib.parse import urlparse
+
 import scrapy
-import json
+
 from imdb import settings
 
 
-class TempeTyresSpider(scrapy.Spider):
+class MovieDetailsSpider(scrapy.Spider):
     name = 'imdb_details'
     file_name = '{}.{}'.format(datetime.now().strftime("%Y%m%d%H%M%S"), settings.FEED_FORMAT)
+    custom_settings = {
+        'ITEM_PIPELINES': {
+            'imdb.pipelines.DBPipeline': 300,
+        }
+    }
 
     def start_requests(self):
-        with open('csv/imdb/imdb_20210320154004.json') as p:
+        with open('csv/imdb/imdb_movies.json') as p:
             file_data = json.load(p)
         for data in file_data:
             data['path'] = urlparse(data.get('url')).path
@@ -55,7 +62,7 @@ class TempeTyresSpider(scrapy.Spider):
     def parse_movie_release_date(self, response, **kwargs):
         data = response.meta['data']
         w_data = []
-        for tr in response.css('#releases ~table:nth-child(4) tbody tr'):
+        for tr in response.css('#releases ~table:nth-child(4) > tr'):
             w_data.append(dict(
                 country=tr.css('td.release-date-item__country-name > a::text').get('').strip(),
                 date=tr.css('td.release-date-item__date::text').get('').strip(),

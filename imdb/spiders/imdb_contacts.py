@@ -37,7 +37,7 @@ class TempeTyresSpider(scrapy.Spider):
             '').lower()
         if 'company' in contact_text or 'direct contact' in contact_text:
             ul = response.css('#contacts > div > div.a-section.a-spacing-top-mini > ul:nth-child(1)').get('')
-            email = find_emails(self.remove_tags(ul))
+            email = self.find_emails(self.remove_tags(ul))
 
     def login(self, response):
         user = 'harlow.28@gmail.com'
